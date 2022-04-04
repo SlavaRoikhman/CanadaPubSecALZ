@@ -7,6 +7,7 @@
   - [Overview](#overview)
   - [Azure Deployment](#azure-deployment)
     - [Schema Definition](#schema-definition)
+    - [Delete Locks](#delete-locks)
     - [Deployment Scenarios](#deployment-scenarios)
     - [Example Deployment Parameters](#example-deployment-parameters)
   - [Recommended Parameter Property Updates](#recommended-parameter-property-updates)
@@ -87,7 +88,15 @@ Reference implementation uses parameter files with `object` parameters to consol
     * [Backup Recovery Vault](../../schemas/latest/landingzones/types/backupRecoveryVault.json)
     * [Hub Network](../../schemas/latest/landingzones/types/hubNetwork.json)
 
+### Delete Locks
+
+As an administrator, you can lock a subscription, resource group, or resource to prevent other users in your organization from accidentally deleting or modifying critical resources. The lock overrides any permissions the user might have.  You can set the lock level to `CanNotDelete` or `ReadOnly`.  Please see [Azure Docs](https://docs.microsoft.com/azure/azure-resource-manager/management/lock-resources) for more information.
+
+**This archetype does not use `CanNotDelete` nor `ReadOnly` locks as part of the deployment.  You may customize the deployment templates when it's required for your environment.**
+
 ### Deployment Scenarios
+
+> Sample deployment scenarios are based on the latest JSON parameters file schema definition.  If you have an older version of this repository, please use the examples from your repository.
 
 | Scenario | Example JSON Parameters | Notes |
 |:-------- |:----------------------- |:----- |
@@ -256,7 +265,7 @@ This example configures:
                 ],
                 "subnets": {
                     "oz": {
-                        "comments": "Foundational Elements Zone (OZ)",
+                        "comments": "App Management Zone (OZ)",
                         "name": "oz",
                         "addressPrefix": "10.2.1.0/25",
                         "nsg": {
@@ -365,6 +374,13 @@ The rest of the segments for the **virtualNetworkId** string must also match the
 in case a different prefix besides **pubsec** was used to conform to a specific and preferred naming convention or organization prefix (item **2**), or the default VNET name of hub-vnet was also changed to something else,
 (**item 3**) - again based on a specific and preferred naming convention that may have been used before when the actual hub VNET was deployed.
 
+> Each subnet in the spoke virtual network has its own User Defined Route (UDR).  This allows for scenarios in which subnets can have different routing rules. It is possible for a single User Defined Route to be associated with many spoke subnets by customizing the automation code.
 ### Deployment Instructions
+
+### Virtual Appliance IP
+To ensure traffic is routed/filtered via the firewall, please validate or update the "egressVirtualApplianceIp" value to the firewall IP in your environment: 
+  - For Azure Firewall, use the firewall IP address
+  - For Network Virtual Appliances (i.e. Fortigate firewalls), use the internal load-balancer IP (item **1**)
+![Generic Subscription:Egress Virtual Appliance IP](../../docs/media/archetypes/egressvirtualApplianceIP.jpg)
 
 Please see [archetype authoring guide for deployment instructions](authoring-guide.md#deployment-instructions).
