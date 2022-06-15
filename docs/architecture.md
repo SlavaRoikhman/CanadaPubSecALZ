@@ -341,7 +341,7 @@ Microsoft's recommendation is [one central Log Analytics workspace](https://docs
 The design and recommendation are based on the following requirements:
 
 * Collect all logs from VMs and PaaS services.
-* Central Logging for security monitoring.
+* Logging for security monitoring.
 * Limit data access based on resource permissions granted to individuals and teams.
 * Tune alerting based on environments (i.e., less alerts from non-production environments).
 
@@ -481,10 +481,10 @@ To simplify, let's assume a single `CostCenter` tag is required for every resour
 
 | Archetype | Design | Documentation |
 | --- | --- | --- |
-| **Central Logging** | ![Archetype:  Central Logging](media/architecture/archetype-logging.jpg) | [Archetype definition](archetypes/logging.md) |
-| **Generic Subscription** | ![Archetype:  Generic Subscription](media/architecture/archetype-generic-subscription.jpg) | [Archetype definition](archetypes/generic-subscription.md)
-| **Machine Learning** | ![Archetype:  Machine Learning](media/architecture/archetype-machinelearning.jpg) | [Archetype definition](archetypes/machinelearning.md) |
-| **Healthcare** | ![Archetype:  Healthcare](media/architecture/archetype-healthcare.jpg) | [Archetype definition](archetypes/healthcare.md) |
+| **Logging** | ![Archetype: Logging](media/architecture/archetype-logging.jpg) | [Archetype definition](archetypes/logging.md) |
+| **Generic Subscription** | ![Archetype: Generic Subscription](media/architecture/archetype-generic-subscription.jpg) | [Archetype definition](archetypes/generic-subscription.md)
+| **Machine Learning** | ![Archetype: Machine Learning](media/architecture/archetype-machinelearning.jpg) | [Archetype definition](archetypes/machinelearning.md) |
+| **Healthcare** | ![Archetype: Healthcare](media/architecture/archetype-healthcare.jpg) | [Archetype definition](archetypes/healthcare.md) |
 
 ---
 
@@ -556,7 +556,7 @@ Use the [Azure DevOps Pipelines](onboarding/azure-devops-pipelines.md) onboardin
 | Platform – Hub Networking using NVAs | platform-connectivity-hub-nva.yml | platform-connectivity-hub-nva-ci | Configures Hub Networking with Fortigate Firewalls. | spn-azure-platform-ops | None |
 | Platform – Hub Networking with Azure Firewall - Firewall Policy | platform-connectivity-hub-azfw-policy.yml | platform-connectivity-hub-azfw-policy-ci | Configures Azure Firewall Policy.  A policy contains firewall rules and firewall configuration such as enabling DNS Proxy.  Firewall policies can be updated independently of Azure Firewall. | spn-azure-platform-ops | None |
 | Platform – Hub Networking with Azure Firewall | platform-connectivity-hub-azfw.yml | platform-connectivity-hub-azfw-ci | Configures Hub Networking with Azure Firewall. | spn-azure-platform-ops | None |
-| Subscriptions | subscription.yml | subscription-ci | Configures a new subscription based on the archetype defined in the configuration file name. | spn-azure-platform-ops | None |
+| Subscriptions | subscriptions.yml | subscriptions-ci | Configures a new subscription based on the archetype defined in the configuration file name. | spn-azure-platform-ops | None |
 | Pull Request Validation | pull-request-check.yml | pull-request-validation-ci | Checks for breaking changes to Bicep templates & parameter schemas prior to merging the change to main branch.  This pipeline must be configured as a check for the `main` branch. | spn-azure-platform-ops | None |
 
 ### 9.4 Release Process
